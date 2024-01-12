@@ -1,5 +1,13 @@
-function normalizeUrl(url: string): string | Error {
-	if (!url) return new Error("URL is empty");
+import * as cheerio from "cheerio";
+
+const $ = cheerio.load(`<div><a href="://www.google.com">Google</a></div>`);
+const url = $("a").attr("href") as string;
+
+function normalizeUrl(url: string): string | null {
+	if (!url) {
+		console.error("URL is empty");
+		return null;
+	}
 
 	try {
 		const newObj = new URL(url);
@@ -11,10 +19,14 @@ function normalizeUrl(url: string): string | Error {
 
 		return normalizedUrl;
 	} catch (error) {
-		console.error(error);
-		return new Error("URL is invalid");
+		console.error("URL is invalid: ", error);
+		return null;
 	}
 }
 
-const a = normalizeUrl("https://www.google.com");
-console.log(a);
+if (url) {
+	const normalizedUrl = normalizeUrl(url);
+	console.log(normalizedUrl);
+} else {
+	console.error("No URL found in the HTML.");
+}

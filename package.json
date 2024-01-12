@@ -3,10 +3,11 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "hono": "^3.12.3",
-    "nightmare": "^3.0.2"
+    "cheerio": "^1.0.0-rc.12",
+    "hono": "^3.12.3"
   },
   "devDependencies": {
-    "@types/bun": "^1.0.0"
+    "@types/bun": "^1.0.0",
+    "@types/nightmare": "^2.10.9"
   }
 }
