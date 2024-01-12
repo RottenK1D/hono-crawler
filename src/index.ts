@@ -17,11 +17,14 @@ async function main() {
 
 	// Call crawlPage and log the result
 	try {
-		const content = await crawlPage(url);
-		if (content) {
-			console.log(content);
-		} else {
-			console.log("No content found");
+		const pages = await crawlPage(url, url, {});
+
+		for (const page in pages) {
+			if (page) {
+				console.log(page);
+			} else {
+				console.log("No content found");
+			}
 		}
 	} catch (error) {
 		console.error("Error while crawling: ", error);
