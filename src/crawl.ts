@@ -1,7 +1,13 @@
 import * as cheerio from "cheerio";
 
-const $ = cheerio.load(`<div><a href="://www.google.com">Google</a></div>`);
-const url = $("a").attr("href") as string;
+function getUrls(htmlBody: string, baseUrl: string): string[] {
+	const $ = cheerio.load(htmlBody);
+	const urls = $("a")
+		.map((i, link) => new URL($(link).attr("href") || "", baseUrl).href)
+		.get();
+
+	return urls;
+}
 
 function normalizeUrl(url: string): string | null {
 	if (!url) {
@@ -24,9 +30,15 @@ function normalizeUrl(url: string): string | null {
 	}
 }
 
-if (url) {
+//exmaple usage
+const htmlBody = `<div><a href="/path">Relative Link</a><a href="https://www.google.com">Google</a></div>`;
+const baseUrl = "http://example.com";
+
+const urls = getUrls(htmlBody, baseUrl);
+
+urls.forEach((url) => {
 	const normalizedUrl = normalizeUrl(url);
-	console.log(normalizedUrl);
-} else {
-	console.error("No URL found in the HTML.");
-}
+	if (normalizedUrl) {
+		console.log(normalizedUrl);
+	}
+});
