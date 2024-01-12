@@ -36,9 +36,9 @@ const baseUrl = "http://example.com";
 
 const urls = getUrls(htmlBody, baseUrl);
 
-urls.forEach((url) => {
+for (const url of urls) {
 	const normalizedUrl = normalizeUrl(url);
 	if (normalizedUrl) {
 		console.log(normalizedUrl);
 	}
-});
+}
