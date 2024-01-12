@@ -1,9 +1,31 @@
-import { Hono } from "hono";
+import { crawlPage } from "./crawl";
 
-const app = new Hono();
+async function main() {
+	// validate arguments and exit if invalid number of arguments
+	if (process.argv.length !== 3) {
+		console.log("No URL provided");
+		return process.exit(1);
+	}
 
-app.get("/", (c) => {
-	return c.text("Hello Hono!");
-});
+	if (process.argv.length > 3) {
+		console.log("Too many arguments");
+		return process.exit(1);
+	}
 
-export default app;
+	// validate url and exit if invalid
+	const url = process.argv[2];
+
+	// Call crawlPage and log the result
+	try {
+		const content = await crawlPage(url);
+		if (content) {
+			console.log(content);
+		} else {
+			console.log("No content found");
+		}
+	} catch (error) {
+		console.error("Error while crawling: ", error);
+	}
+}
+
+main();

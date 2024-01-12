@@ -1,5 +1,32 @@
 import * as cheerio from "cheerio";
 
+// crawlPage fetches the html body of the url and returns it as a string
+export async function crawlPage(url: string) {
+	console.log(`Crawling: ${url}`);
+
+	try {
+		const response = await fetch(url);
+
+		//check response status and exit if not ok
+		if (!response.ok) {
+			console.error(`Failed to crawl: ${url}. Status: ${response.status}`);
+			return null;
+		}
+
+		//check content type and exit if not html
+		const contentType = response.headers.get("content-type");
+		if (!contentType || !contentType.includes("text/html")) {
+			console.error(`Failed to crawl: ${url}. Content-Type: ${contentType}`);
+			return null;
+		}
+
+		return await response.text();
+	} catch (error) {
+		console.error(`Error while fetching: ${url}. Error: ${error}`);
+		return null;
+	}
+}
+
 // getUrls returns all urls from htmlBody with baseUrl
 function getUrls(htmlBody: string, baseUrl: string): string[] | null {
 	const $ = cheerio.load(htmlBody);
