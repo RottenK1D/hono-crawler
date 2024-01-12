@@ -1,5 +1,6 @@
 import * as cheerio from "cheerio";
 
+// getUrls returns all urls from htmlBody with baseUrl
 function getUrls(htmlBody: string, baseUrl: string): string[] {
 	const $ = cheerio.load(htmlBody);
 	const urls = $("a")
@@ -9,6 +10,7 @@ function getUrls(htmlBody: string, baseUrl: string): string[] {
 	return urls;
 }
 
+// normalizeUrl returns a normalized url or null if the url is invalid
 function normalizeUrl(url: string): string | null {
 	if (!url) {
 		console.error("URL is empty");
@@ -30,7 +32,7 @@ function normalizeUrl(url: string): string | null {
 	}
 }
 
-//exmaple usage
+//exmaple usage of getUrls and normalizeUrl
 const htmlBody = `<div><a href="/path">Relative Link</a><a href="https://www.google.com">Google</a></div>`;
 const baseUrl = "http://example.com";
 
