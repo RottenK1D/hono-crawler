@@ -11,7 +11,7 @@ Before you begin, ensure you have installed Bun on your system. If you don't hav
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/hono-crawler.git
+    git clone https://github.com/RottenK1D/hono-crawler
     ```
 
 2. Install the dependencies:
