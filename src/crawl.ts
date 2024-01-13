@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 
-interface Pages {
+export interface Pages {
 	[key: string]: number;
 }
 
